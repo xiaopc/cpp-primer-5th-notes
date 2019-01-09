@@ -6,5 +6,5 @@
 
 ## 目录
 
-[类型](blob/master/type.md)
-[函数](blob/master/function.md)
+[类型](type.md)
+[函数](function.md)
