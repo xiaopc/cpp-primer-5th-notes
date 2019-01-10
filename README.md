@@ -7,4 +7,7 @@
 ## 目录
 
 [类型](type.md)
+
 [函数](function.md)
+
+[类](class.md)
