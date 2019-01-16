@@ -10,6 +10,8 @@
 
 [表达式](expression.md)
 
+[语句](statement.md)
+
 [函数](function.md)
 
 [类](class.md)
