@@ -43,7 +43,7 @@ C seq(n, t);
 c1 = c2;
 c1 = {a, b, …}; // array 不支持
 // 赋值会导致指向左边容器内部的迭代器 引用 指针失效
-a.swap(b); （== swap(a, b) C++ 11）
+a.swap(b); //（== swap(a, b) C++11）
 // 而 swap 不会, 除 array string 外
 // 除 array 外,  O(1)
 ```
@@ -68,11 +68,15 @@ c.empty()
 
 `insert emplace erase clear`
 
-### 无序关联容器不支持大于小于比较运算, 元素支持 `<` 运算符
+### 比较运算
+
+无序关联容器不支持大于小于比较运算
+
+需元素支持 `<` 运算符
 
 ### 获取迭代器
 
-`(c)begin, (c)end`
+`(c)begin`, `(c)end`
 
 ### 反向容器成员（`forward_list` 不支持）
 
