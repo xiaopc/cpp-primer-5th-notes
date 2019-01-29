@@ -19,3 +19,5 @@
 [I/O](io.md)
 
 [STL 容器](container.md)
+
+[STL 泛型算法](genetic.md)
