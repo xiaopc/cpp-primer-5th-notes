@@ -19,9 +19,6 @@ equal(a_begin, a_end, b_begin);
 fill(begin, end, value);
 fill_n(begin, length, value);
 
-back_inserter(container&);  // (<iterator>)
-//返回一个与容器绑定的插入迭代器, 通过其赋值时会调用 push_back()
-
 copy(source_begin, source_end, dest);
 //返回值是 dest.end
 
@@ -52,6 +49,11 @@ auto newCallable = bind(callable, arg_list);  // **C++11** <functional>
 特殊迭代器：
 
 * 插入迭代器 `back_inserter` `front_inserter` `inserter`（接受第二个迭代器参数, 插入到给定位置前, + 等等操作无作用）
+
+    ```cpp
+    back_inserter(container&);  // (<iterator>)
+    //返回一个与容器绑定的插入迭代器, 通过其赋值时会调用 push_back()
+    ```
 
 * 流迭代器 `istream_iterator`（一参数版本绑定流, 无参版本尾后迭代器, 需模板实例化, 懒惰求值）`ostream_iterator`（可选第二参数 在每次输出后输出 C 风格字符串, + 等操作无作用）
 
