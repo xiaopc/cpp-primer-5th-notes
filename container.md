@@ -119,7 +119,25 @@ emplace_after(p, args)
 erase_after(p) (b, e) // 从b之后到e(不含)之前
 ```
 
-> 不要保存 end 返回的迭代器
+
+## list forward_list 特定算法
+
+```cpp
+lst1.merge(lst2) // 都必须有序, 将清空 lst2
+lst1.merge(lst2, comp)
+lst.remove(val)
+lst.remove_if(predicate)
+lst.reverse()
+lst.sort()
+lst.sort(comp)
+lst.unique()
+lst.unique(predicate)
+lst.splice(args)
+lst.splice_pafter(args)
+// (p, lst2) p 是 指向 lst 中元素的迭代器或指向 flst 首前位置迭代器,  将 lst2 全部内容移动到 p 前或 flst 后, 清空 lst2
+// (p, lst2, p2) p2 是指向 lst2中元素迭代器, 将 p2 指向的元素移动到 lst 中, 或将 p2 后移动到 flst 中, lst2 可以与 lst flst 相同
+// (p, lst2, b, e) b e 表示 lst2 中合法范围, lst2 可以相同 但 p不能指向给定范围内元素
+```
 
 
 ## 大小管理
