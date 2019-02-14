@@ -1,5 +1,7 @@
 # STL 容器
 
+# 顺序容器
+
 `vector` 可变大小数组 支持快速随机访问, 在除尾部外插删慢
 
 `deque` 双端队列  支持快速随机访问, 在头尾部插删快
@@ -209,3 +211,85 @@ stold(s, p=0)
 ## 适配器 
 
 stack(deque) queue(deque) priority_queue(vector)
+
+# 关联容器
+
+有序关联容器 `map multimap set multiset` 
+
+必须定义关键字类型的 `<` 的运算符, 定义一个“严格弱序”（“小于等于”）
+
+使用自定义比较函数：`multiset<type, decltype(comp) *> ms(comp);`
+
+```cpp
+pair<utility>
+pair<T1, T2> p(v1, v2);
+pair<T1, T2> p = {v1, v2};
+make_pair(v1, v2);
+p.first
+p.second
+p1 relop p2 //（关系运算符按字典序, <）
+```
+
+**C++11** 返回 pair 的函数:
+```
+pair<T1, T2>
+func(…){
+  return {v1, v2};
+  return pair<T1, T2>(v1, v2); // 原, 也可 make_pair
+}
+```
+
+## 关联容器额外类型别名
+
++ `key_type`
++ `mapped_type`（只有 `map multimap unordered_map unordered_multimap`）
++ `value_type`（ set 与 `key_type` 相同, map 为 `pair<const key_type, mapped_type>`）
+
+
+## 关联容器 insert
+```cpp
+c.insert(value_type) // 返回 pair, 包含一个指向给定关键字元素迭代器 , 以及指示插入是否成功 bool （不允许重复关键字容器）
+c.emplace(args) // 同上
+c.insert(b, e) // c::value_type, 返回 void
+c.insert(p, v) // 同上
+c.emplace(p, args) // 从 p 开始搜索新元素存储位置, 返回指向给定关键字元素迭代器
+```
+
+## 桶
+
+无序容器在存储上组织为一组桶
+
+```cpp
+// 桶接口
+c.bucket_count() // 正在使用桶数
+c.max_bucket_count() // 最大桶数
+c.bucket_size(n) // 第 n 桶有多少元素
+c.bucket(k) // k 在哪个桶
+// 桶迭代
+(const_)local_iterator // 可用来访问桶中元素的迭代器类型
+c.(c)begin, c.(c)end // 桶 n 的首元素/尾后元素迭代器
+// 哈希策略
+c.load_fractor() // 每桶平均元素数，float
+c.max_load_fractor() // 试图维护平均桶大小，float
+c.rehash(n) // 重组存储， 使 bucket_count>=n，bucket_count>size/max_load_factor
+c.reserve(n) // 重组存储，使 c 可以保存 n 个元素且不必 rehash
+```
+
+## 对关键字类型要求
+
+默认使用`==`比较元素，还使用 `hash<key_type>` 类型对象生成每个元素 hash 值
+
+自定义类型(不提供 hash 模板版本)：
+```cpp
+size_t hasher(const MyType &sd) {
+    return hash<built_in_type>()(...);
+}
+bool eq(const MyType &lhs, const MyType &rhs){
+    return ... == ...;
+}
+using MyType_multiset = unordered_multiset<MyType, decltype(hasher)*, decltype(eq)*>;
+MyType_multiset instance(BUCKET_SIZE, hasher, eq);
+
+// 若已定义 ==，则直接：
+unordered_set<MyType, decltype(hasher)*> instance(BUCKET_SIZE, hasher);
+```
